@@ -1,21 +1,22 @@
 # ClassChat Makefile
 # Provides convenient commands to run server, client, and manage the project
 
-.PHONY: server client clean help test
+.PHONY: server client client-advanced clean help test
 
 # Default target
 help:
 	@echo "ClassChat - Available Commands:"
 	@echo "================================"
-	@echo "make server    - Start the ClassChat server"
-	@echo "make client    - Start the ClassChat client"
-	@echo "make test      - Run basic tests"
-	@echo "make clean     - Remove Python cache files"
-	@echo "make help      - Show this help message"
+	@echo "make server          - Start the ClassChat server"
+	@echo "make client          - Start the basic client (Task 1)"
+	@echo "make client-advanced - Start the advanced client with select() (Task 2)"
+	@echo "make test            - Run basic tests"
+	@echo "make clean           - Remove Python cache files"
+	@echo "make help            - Show this help message"
 	@echo ""
 	@echo "Usage:"
 	@echo "  1. Open a terminal and run: make server"
-	@echo "  2. Open another terminal and run: make client"
+	@echo "  2. Open another terminal and run: make client-advanced"
 
 # Run the server
 server:
@@ -24,8 +25,13 @@ server:
 
 # Run the client
 client:
-	@echo "Starting ClassChat Client..."
+	@echo "Starting ClassChat Client (Task 1)..."
 	python3 src/client.py
+
+# Run the advanced client with I/O multiplexing
+client-advanced:
+	@echo "Starting ClassChat Advanced Client (Task 2 - select())..."
+	python3 src/client_advanced.py
 
 # Clean Python cache files
 clean:
@@ -40,4 +46,5 @@ test:
 	@echo "Running syntax checks..."
 	python3 -m py_compile src/server.py
 	python3 -m py_compile src/client.py
+	python3 -m py_compile src/client_advanced.py
 	@echo "All syntax checks passed!"

@@ -10,11 +10,17 @@ ClassChat is designed to facilitate real-time communication among students in a 
 
 ### ✅ Task 1: Client-Server Communication using TCP/IP (30 points)
 - **Server Implementation**: Complete TCP server with socket creation, binding, listening, and message handling
-- **Client Implementation**: Complete TCP client with connection, send/receive capabilities
+- **Client Implementation**: Complete TCP client with connection, send/receive capabilities using threading
 - **Protocol**: TCP/IP with proper acknowledgment system
+- **Bidirectional Communication**: Both server and client can send/receive messages simultaneously
+
+### ✅ Task 2: Advanced Client with I/O Multiplexing (20 points)
+- **I/O Multiplexing**: Implemented using `select()` system call
+- **Single-threaded**: No threading overhead, lower CPU usage
+- **Event-driven**: Monitors both socket and keyboard input simultaneously
+- **Efficient**: Waits for events instead of busy polling or blocking
 
 ### 🔄 Upcoming Tasks
-- Task 2: Advanced Client with I/O Multiplexing (20 points)
 - Task 3: Multi-Thread Communication Server (20 points)
 - Task 4: Client-Client Communication (30 points)
 - Bonus Tasks: Group chatting, file transfer, offline messages, encryption
@@ -24,14 +30,16 @@ ClassChat is designed to facilitate real-time communication among students in a 
 ```
 ClassChat/
 ├── src/
-│   ├── server.py          # TCP server implementation
-│   └── client.py          # TCP client implementation
+│   ├── server.py              # TCP server implementation (Task 1)
+│   ├── client.py              # Basic client with threading (Task 1)
+│   └── client_advanced.py     # Advanced client with select() (Task 2)
 ├── docs/
-│   └── (documentation files)
+│   └── (documentation files - local only)
 ├── screenshots/
-│   └── (demo screenshots)
+│   └── task1/                 # Task 1 demo screenshots and report
 ├── README.md
 ├── Makefile
+├── verify.sh
 └── .gitignore
 ```
 
@@ -68,14 +76,21 @@ The server will start listening on `127.0.0.1:12345` and wait for client connect
 
 ### Running the Client
 
-Open another terminal and run:
+#### Option 1: Basic Client (Task 1 - with Threading)
 ```bash
 make client
 # Or directly:
 python3 src/client.py
 ```
 
-The client will connect to the server and you can start sending messages.
+#### Option 2: Advanced Client (Task 2 - with select())
+```bash
+make client-advanced
+# Or directly:
+python3 src/client_advanced.py
+```
+
+Both clients will connect to the server and you can start sending messages.
 
 ### Example Session
 
@@ -111,9 +126,11 @@ You: Hello, Server!
 [CLIENT] Server response: Server received: Hello, Server!
 ```
 
-## Features (Task 1)
+## Features
 
-### Server Features
+### Task 1: Basic Client-Server Communication (30 points)
+
+#### Server Features
 - ✅ Socket creation for communication
 - ✅ Port binding and address configuration
 - ✅ TCP protocol configuration
@@ -121,18 +138,31 @@ You: Hello, Server!
 - ✅ Accepting client connections
 - ✅ Sending acknowledgment messages
 - ✅ Receiving messages from clients
-- ✅ Sending responses to clients
+- ✅ Sending messages to clients (bidirectional)
+- ✅ Threading for simultaneous send/receive
 - ✅ Graceful connection handling
 
-### Client Features
+#### Client Features (Basic)
 - ✅ Socket creation for communication
 - ✅ TCP protocol configuration
 - ✅ Server connection establishment
 - ✅ Acknowledgment reception
 - ✅ Message sending to server
 - ✅ Response reception from server
+- ✅ Threading for simultaneous operations
 - ✅ Interactive command-line interface
 - ✅ Exit command support
+
+### Task 2: Advanced Client with I/O Multiplexing (20 points)
+
+#### Advanced Client Features
+- ✅ **I/O Multiplexing with select()**: Single-threaded event-driven architecture
+- ✅ **Lower CPU Usage**: No threading overhead or context switching
+- ✅ **Simultaneous Monitoring**: Watches both socket and stdin at the same time
+- ✅ **Event-driven**: Reacts immediately when either input has data
+- ✅ **System Callback**: Uses OS-level select() for efficient waiting
+- ✅ **Same Functionality**: Send and receive messages just like threaded version
+- ✅ **More Efficient**: Better resource utilization for I/O operations
 
 ## Technical Implementation
 
@@ -144,10 +174,20 @@ You: Hello, Server!
 - **Buffer Size**: 1024 bytes
 - **Connection Backlog**: 1 (Task 1 single client)
 
-### Client Architecture
+### Client Architecture (Basic - Task 1)
 - **Socket Type**: TCP (SOCK_STREAM)
 - **Address Family**: IPv4 (AF_INET)
 - **Server Connection**: 127.0.0.1:12345
+- **Buffer Size**: 1024 bytes
+- **Encoding**: UTF-8
+- **Concurrency**: Threading (separate threads for send/receive)
+
+### Advanced Client Architecture (Task 2)
+- **Socket Type**: TCP (SOCK_STREAM)
+- **I/O Multiplexing**: select() system call
+- **Monitored Inputs**: [sys.stdin, client_socket]
+- **Event-driven**: Single thread, waits for any input to be ready
+- **No Threading**: Lower CPU usage, no context switching
 - **Buffer Size**: 1024 bytes
 - **Encoding**: UTF-8
 
@@ -155,17 +195,22 @@ You: Hello, Server!
 
 ### Testing
 To test the implementation:
-1. Start the server in one terminal
-2. Start the client in another terminal
-3. Send various messages from client to server
+1. Start the server in one terminal: `make server`
+2. Start a client in another terminal:
+   - Basic client (Task 1): `make client`
+   - Advanced client (Task 2): `make client-advanced`
+3. Send messages from both server and client
 4. Verify bidirectional communication
 5. Test the exit command
 
 ### Makefile Commands
 ```bash
-make server    # Run the server
-make client    # Run the client
-make clean     # Clean up Python cache files
+make server          # Run the server
+make client          # Run the basic client (Task 1)
+make client-advanced # Run the advanced client with select() (Task 2)
+make test            # Run syntax checks
+make clean           # Clean up Python cache files
+make help            # Show all available commands
 ```
 
 ## AI/ChatGPT Usage
