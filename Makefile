@@ -1,27 +1,34 @@
 # ClassChat Makefile
 # Provides convenient commands to run server, client, and manage the project
 
-.PHONY: server client client-advanced clean help test
+.PHONY: server server-multi client client-advanced clean help test
 
 # Default target
 help:
 	@echo "ClassChat - Available Commands:"
 	@echo "================================"
-	@echo "make server          - Start the ClassChat server"
+	@echo "make server          - Start the basic server (Task 1)"
+	@echo "make server-multi    - Start the multi-threaded server (Task 3)"
 	@echo "make client          - Start the basic client (Task 1)"
 	@echo "make client-advanced - Start the advanced client with select() (Task 2)"
 	@echo "make test            - Run basic tests"
 	@echo "make clean           - Remove Python cache files"
 	@echo "make help            - Show this help message"
 	@echo ""
-	@echo "Usage:"
-	@echo "  1. Open a terminal and run: make server"
-	@echo "  2. Open another terminal and run: make client-advanced"
+	@echo "Usage (Multi-threaded server):"
+	@echo "  1. Open a terminal and run: make server-multi"
+	@echo "  2. Open more terminals and run: make client (or make client-advanced)"
+	@echo "  3. Multiple clients can connect simultaneously!"
 
 # Run the server
 server:
-	@echo "Starting ClassChat Server..."
+	@echo "Starting ClassChat Server (Task 1)..."
 	python3 src/server.py
+
+# Run the multi-threaded server
+server-multi:
+	@echo "Starting ClassChat Multi-Threaded Server (Task 3)..."
+	python3 src/server_multithreaded.py
 
 # Run the client
 client:
@@ -45,6 +52,7 @@ clean:
 test:
 	@echo "Running syntax checks..."
 	python3 -m py_compile src/server.py
+	python3 -m py_compile src/server_multithreaded.py
 	python3 -m py_compile src/client.py
 	python3 -m py_compile src/client_advanced.py
 	@echo "All syntax checks passed!"

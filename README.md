@@ -20,8 +20,14 @@ ClassChat is designed to facilitate real-time communication among students in a 
 - **Event-driven**: Monitors both socket and keyboard input simultaneously
 - **Efficient**: Waits for events instead of busy polling or blocking
 
+### ✅ Task 3: Multi-Thread Communication Server (20 points)
+- **Threading Model**: Each client gets dedicated thread for independent communication
+- **Concurrent Connections**: Supports multiple clients simultaneously
+- **Thread Management**: Automatic thread creation and cleanup
+- **Client Tracking**: Thread-safe client list management with locks
+- **Scalable**: Can handle many concurrent connections efficiently
+
 ### 🔄 Upcoming Tasks
-- Task 3: Multi-Thread Communication Server (20 points)
 - Task 4: Client-Client Communication (30 points)
 - Bonus Tasks: Group chatting, file transfer, offline messages, encryption
 
@@ -30,13 +36,15 @@ ClassChat is designed to facilitate real-time communication among students in a 
 ```
 ClassChat/
 ├── src/
-│   ├── server.py              # TCP server implementation (Task 1)
-│   ├── client.py              # Basic client with threading (Task 1)
-│   └── client_advanced.py     # Advanced client with select() (Task 2)
+│   ├── server.py                  # Basic server (Task 1)
+│   ├── server_multithreaded.py    # Multi-threaded server (Task 3)
+│   ├── client.py                  # Basic client with threading (Task 1)
+│   └── client_advanced.py         # Advanced client with select() (Task 2)
 ├── docs/
 │   └── (documentation files - local only)
 ├── screenshots/
-│   └── task1/                 # Task 1 demo screenshots and report
+│   ├── task1/                     # Task 1 demo screenshots and report
+│   └── task2/                     # Task 2 demo screenshots and report
 ├── README.md
 ├── Makefile
 ├── verify.sh
@@ -65,11 +73,18 @@ chmod +x src/server.py src/client.py
 
 ### Running the Server
 
-Open a terminal and run:
+#### Option 1: Basic Server (Task 1 - Single Client)
 ```bash
 make server
 # Or directly:
 python3 src/server.py
+```
+
+#### Option 2: Multi-Threaded Server (Task 3 - Multiple Clients) ⭐ RECOMMENDED
+```bash
+make server-multi
+# Or directly:
+python3 src/server_multithreaded.py
 ```
 
 The server will start listening on `127.0.0.1:12345` and wait for client connections.
@@ -164,15 +179,40 @@ You: Hello, Server!
 - ✅ **Same Functionality**: Send and receive messages just like threaded version
 - ✅ **More Efficient**: Better resource utilization for I/O operations
 
+### Task 3: Multi-Thread Communication Server (20 points)
+
+#### Multi-Threaded Server Features
+- ✅ **Multiple Concurrent Clients**: Supports unlimited simultaneous connections
+- ✅ **Threading Model**: Each client gets its own dedicated thread
+- ✅ **Thread-Safe Operations**: Uses locks for client list management
+- ✅ **Automatic Thread Management**: Creates and cleans up threads automatically
+- ✅ **Client Tracking**: Maintains list of all active connections
+- ✅ **Broadcast Capability**: Can send messages to all connected clients
+- ✅ **System Notifications**: Alerts when clients join/leave
+- ✅ **Unique Client IDs**: Each client gets a unique identifier
+- ✅ **Graceful Shutdown**: Properly closes all connections on exit
+- ✅ **Scalable Architecture**: Foundation for real chat application
+
 ## Technical Implementation
 
-### Server Architecture
+### Server Architecture (Basic - Task 1)
 - **Socket Type**: TCP (SOCK_STREAM)
 - **Address Family**: IPv4 (AF_INET)
 - **Host**: 127.0.0.1 (localhost)
 - **Port**: 12345
 - **Buffer Size**: 1024 bytes
-- **Connection Backlog**: 1 (Task 1 single client)
+- **Connection Backlog**: 1 (single client)
+- **Concurrency**: Threading for send/receive
+
+### Multi-Threaded Server Architecture (Task 3)
+- **Socket Type**: TCP (SOCK_STREAM)
+- **Address Family**: IPv4 (AF_INET)
+- **Host**: 127.0.0.1 (localhost)
+- **Port**: 12345
+- **Connection Backlog**: 5 (up to 5 pending connections)
+- **Threading**: One thread per client (daemon threads)
+- **Client Management**: Thread-safe list with threading.Lock()
+- **Scalability**: Handles multiple concurrent clients independently
 
 ### Client Architecture (Basic - Task 1)
 - **Socket Type**: TCP (SOCK_STREAM)
@@ -194,18 +234,31 @@ You: Hello, Server!
 ## Development
 
 ### Testing
-To test the implementation:
-1. Start the server in one terminal: `make server`
-2. Start a client in another terminal:
+
+#### Test Task 1 & 2:
+1. Start basic server: `make server`
+2. Start a client:
    - Basic client (Task 1): `make client`
    - Advanced client (Task 2): `make client-advanced`
 3. Send messages from both server and client
 4. Verify bidirectional communication
-5. Test the exit command
+
+#### Test Task 3 (Multi-threaded Server): ⭐
+1. Start multi-threaded server: `make server-multi`
+2. Open multiple terminals and start clients:
+   - Terminal 2: `make client`
+   - Terminal 3: `make client`
+   - Terminal 4: `make client-advanced`
+   - Terminal 5: `make client-advanced`
+3. Send messages from different clients
+4. Verify all clients connected simultaneously
+5. Disconnect one client, verify others still connected
+6. Test exit command
 
 ### Makefile Commands
 ```bash
-make server          # Run the server
+make server          # Run the basic server (Task 1)
+make server-multi    # Run the multi-threaded server (Task 3) ⭐
 make client          # Run the basic client (Task 1)
 make client-advanced # Run the advanced client with select() (Task 2)
 make test            # Run syntax checks
