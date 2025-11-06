@@ -176,16 +176,6 @@ This project was developed with AI assistance for:
 - **Best practices**: Applied Python socket programming best practices
 - **Error handling**: Implemented robust exception handling mechanisms
 
-### Learning Outcomes
-- Understanding of TCP/IP socket programming fundamentals
-- Client-server architecture design patterns
-- Network communication protocols and handshaking
-- Error handling in distributed systems
-- Python's socket module and network programming APIs
-
-## Contributing
-
-This is an academic project. For questions or issues, please contact the development team.
 
 ## License
 
@@ -193,12 +183,8 @@ Academic use only - Class Project
 
 ## Authors
 
-- [Your Name]
-- Class: [Your Class Name]
+- Bereket
+- Class: CSCE 513
 - Date: November 5, 2025
 
-## Acknowledgments
 
-- Python Socket Programming Documentation
-- TCP/IP Protocol Specifications
-- Course materials and guidelines
