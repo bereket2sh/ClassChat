@@ -2,10 +2,12 @@
 """
 ClassChat Server - Task 1: Basic Client-Server Communication
 This server implements TCP/IP socket communication with a single client.
+Server can both receive messages from client AND send messages to client.
 """
 
 import socket
 import sys
+import threading
 
 # Server configuration
 HOST = '127.0.0.1'  # Localhost
@@ -50,30 +52,77 @@ def create_server():
         ack_message = "Connection established. Welcome to ClassChat Server!"
         client_socket.send(ack_message.encode('utf-8'))
         print("[SERVER] Acknowledgment sent to client")
+        print("\n" + "=" * 50)
+        print("Server can now send and receive messages.")
+        print("Type your message to send to client.")
+        print("Type 'exit' to quit.")
+        print("=" * 50 + "\n")
         
-        # Communication loop
-        while True:
-            # Step 7: Receive message from client
-            data = client_socket.recv(1024)  # Buffer size of 1024 bytes
-            
-            if not data:
-                print("[SERVER] Client disconnected")
+        # Flag to control threads
+        running = True
+        
+        # Thread to receive messages from client
+        def receive_messages():
+            nonlocal running
+            while running:
+                try:
+                    # Step 7: Receive message from client
+                    data = client_socket.recv(1024)
+                    
+                    if not data:
+                        print("\n[SERVER] Client disconnected")
+                        running = False
+                        break
+                    
+                    message = data.decode('utf-8')
+                    print(f"\n[CLIENT] {message}")
+                    print("Server: ", end="", flush=True)
+                    
+                    # Check for exit command from client
+                    if message.lower() == 'exit':
+                        print("\n[SERVER] Client requested to exit")
+                        running = False
+                        break
+                        
+                except Exception as e:
+                    if running:
+                        print(f"\n[SERVER ERROR] {e}")
+                    break
+        
+        # Start receiver thread
+        receiver = threading.Thread(target=receive_messages, daemon=True)
+        receiver.start()
+        
+        # Main thread handles sending messages
+        while running:
+            try:
+                # Step 8: Send message to client
+                message = input("Server: ")
+                
+                if not running:
+                    break
+                    
+                if not message:
+                    continue
+                
+                client_socket.send(message.encode('utf-8'))
+                
+                # Check for exit command
+                if message.lower() == 'exit':
+                    print("[SERVER] Closing connection...")
+                    running = False
+                    break
+                    
+            except EOFError:
+                running = False
                 break
-            
-            message = data.decode('utf-8')
-            print(f"[SERVER] Received from client: {message}")
-            
-            # Check for exit command
-            if message.lower() == 'exit':
-                print("[SERVER] Client requested to exit")
-                response = "Goodbye! Connection closing..."
-                client_socket.send(response.encode('utf-8'))
+            except Exception as e:
+                print(f"\n[SERVER ERROR] {e}")
+                running = False
                 break
-            
-            # Step 8: Send message to client (echo back with confirmation)
-            response = f"Server received: {message}"
-            client_socket.send(response.encode('utf-8'))
-            print(f"[SERVER] Sent to client: {response}")
+        
+        # Wait for receiver thread to finish
+        receiver.join(timeout=1)
         
     except Exception as e:
         print(f"[SERVER ERROR] {e}")
