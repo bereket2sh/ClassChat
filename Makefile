@@ -1,7 +1,7 @@
 # ClassChat Makefile
 # Provides convenient commands to run server, client, and manage the project
 
-.PHONY: server server-multi client client-advanced clean help test
+.PHONY: server server-multi server-task4 client client-advanced client-task4 clean help test
 
 # Default target
 help:
@@ -9,16 +9,19 @@ help:
 	@echo "================================"
 	@echo "make server          - Start the basic server (Task 1)"
 	@echo "make server-multi    - Start the multi-threaded server (Task 3)"
+	@echo "make server-task4    - Start client-client routing server (Task 4) ⭐"
 	@echo "make client          - Start the basic client (Task 1)"
 	@echo "make client-advanced - Start the advanced client with select() (Task 2)"
+	@echo "make client-task4    - Start the client-client messaging client (Task 4) ⭐"
 	@echo "make test            - Run basic tests"
 	@echo "make clean           - Remove Python cache files"
 	@echo "make help            - Show this help message"
 	@echo ""
-	@echo "Usage (Multi-threaded server):"
-	@echo "  1. Open a terminal and run: make server-multi"
-	@echo "  2. Open more terminals and run: make client (or make client-advanced)"
-	@echo "  3. Multiple clients can connect simultaneously!"
+	@echo "Usage (Task 4 - Client-to-Client):"
+	@echo "  1. Terminal 1: make server-task4"
+	@echo "  2. Terminal 2: make client-task4  (e.g., Alice)"
+	@echo "  3. Terminal 3: make client-task4  (e.g., Bob)"
+	@echo "  4. Alice can send messages to Bob and vice versa!"
 
 # Run the server
 server:
@@ -30,6 +33,11 @@ server-multi:
 	@echo "Starting ClassChat Multi-Threaded Server (Task 3)..."
 	python3 src/server_multithreaded.py
 
+# Run the Task 4 server with client-to-client routing
+server-task4:
+	@echo "Starting ClassChat Task 4 Server (Client-Client Routing)..."
+	python3 src/server_task4.py
+
 # Run the client
 client:
 	@echo "Starting ClassChat Client (Task 1)..."
@@ -39,6 +47,11 @@ client:
 client-advanced:
 	@echo "Starting ClassChat Advanced Client (Task 2 - select())..."
 	python3 src/client_advanced.py
+
+# Run the Task 4 client with JSON messaging
+client-task4:
+	@echo "Starting ClassChat Task 4 Client (Client-Client Messaging)..."
+	python3 src/client_task4.py
 
 # Clean Python cache files
 clean:
@@ -53,6 +66,8 @@ test:
 	@echo "Running syntax checks..."
 	python3 -m py_compile src/server.py
 	python3 -m py_compile src/server_multithreaded.py
+	python3 -m py_compile src/server_task4.py
 	python3 -m py_compile src/client.py
 	python3 -m py_compile src/client_advanced.py
+	python3 -m py_compile src/client_task4.py
 	@echo "All syntax checks passed!"

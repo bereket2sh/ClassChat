@@ -27,9 +27,20 @@ ClassChat is designed to facilitate real-time communication among students in a 
 - **Client Tracking**: Thread-safe client list management with locks
 - **Scalable**: Can handle many concurrent connections efficiently
 
-### 🔄 Upcoming Tasks
-- Task 4: Client-Client Communication (30 points)
-- Bonus Tasks: Group chatting, file transfer, offline messages, encryption
+### ✅ Task 4: Client-Client Communication (30 points)
+- **Client Registry**: Server maintains username-to-socket mapping
+- **Message Routing**: Server forwards messages from sender to receiver
+- **JSON Protocol**: Structured message format with sender, receiver, and text
+- **Error Handling**: Validates receiver exists, handles disconnections
+- **System Notifications**: Join/leave alerts to all clients
+- **User List**: Broadcasts online users to all clients
+- **Delivery Confirmation**: Sender receives confirmation when message delivered
+
+### 🔄 Bonus Tasks (Optional)
+- Group chatting (10 points)
+- File transfer (10 points)
+- Offline messages (10 points)
+- Encryption/Decryption (10 points)
 
 ## Project Structure
 
@@ -38,13 +49,16 @@ ClassChat/
 ├── src/
 │   ├── server.py                  # Basic server (Task 1)
 │   ├── server_multithreaded.py    # Multi-threaded server (Task 3)
+│   ├── server_task4.py            # Client-client routing server (Task 4) ⭐
 │   ├── client.py                  # Basic client with threading (Task 1)
-│   └── client_advanced.py         # Advanced client with select() (Task 2)
+│   ├── client_advanced.py         # Advanced client with select() (Task 2)
+│   └── client_task4.py            # JSON messaging client (Task 4) ⭐
 ├── docs/
 │   └── (documentation files - local only)
 ├── screenshots/
 │   ├── task1/                     # Task 1 demo screenshots and report
-│   └── task2/                     # Task 2 demo screenshots and report
+│   ├── task2/                     # Task 2 demo screenshots and report
+│   └── task3/                     # Task 3 demo screenshots and report
 ├── README.md
 ├── Makefile
 ├── verify.sh
@@ -192,6 +206,21 @@ You: Hello, Server!
 - ✅ **Unique Client IDs**: Each client gets a unique identifier
 - ✅ **Graceful Shutdown**: Properly closes all connections on exit
 - ✅ **Scalable Architecture**: Foundation for real chat application
+
+### Task 4: Client-Client Communication (30 points)
+
+#### Client-Client Routing Features
+- ✅ **Client Registration**: Users register with unique usernames
+- ✅ **Client Registry**: Server maintains {username: socket} mapping
+- ✅ **Message Routing**: Server forwards messages to specific recipients
+- ✅ **JSON Protocol**: Structured format {"sender", "receiver", "text"}
+- ✅ **Receiver Validation**: Checks if recipient is online before sending
+- ✅ **Error Handling**: Notifies sender if receiver not found
+- ✅ **Delivery Confirmation**: Sender gets confirmation when message delivered
+- ✅ **System Notifications**: Join/leave alerts broadcast to all users
+- ✅ **Online User List**: Broadcasts list of connected users
+- ✅ **Username Uniqueness**: Prevents duplicate usernames
+- ✅ **Automatic Cleanup**: Removes disconnected users from registry
 
 ## Technical Implementation
 
