@@ -107,25 +107,35 @@ class ClassChatGUI:
             # Send username
             self.client_socket.send(username.encode('utf-8'))
             
-            # Wait for acknowledgment
-            ack = self.client_socket.recv(1024).decode('utf-8')
+            # Wait for acknowledgment (server sends JSON)
+            ack_data = self.client_socket.recv(1024).decode('utf-8')
             
-            if "successfully" in ack.lower():
-                self.username = username
-                self.connected = True
-                self.setup_chat_screen()
-                
-                # Start receive thread
-                receive_thread = threading.Thread(target=self.receive_messages, daemon=True)
-                receive_thread.start()
-            else:
-                self.login_status.config(text=ack)
-                self.client_socket.close()
+            # Try to parse as JSON (for bonus3 server)
+            try:
+                ack_json = json.loads(ack_data)
+                ack_message = ack_json.get('message', '')
+            except:
+                # Fallback to plain text (for older servers)
+                ack_message = ack_data
+            
+            # Connection successful - setup chat screen
+            self.username = username
+            self.connected = True
+            
+            # Show connecting status
+            self.login_status.config(text="Connected! Loading chat...", foreground='green')
+            self.root.update()  # Force UI update
+            
+            self.setup_chat_screen()
+            
+            # Start receive thread
+            receive_thread = threading.Thread(target=self.receive_messages, daemon=True)
+            receive_thread.start()
         
         except ConnectionRefusedError:
-            self.login_status.config(text="Could not connect to server. Is it running?")
+            self.login_status.config(text="Could not connect to server. Is it running?", foreground='red')
         except Exception as e:
-            self.login_status.config(text=f"Connection error: {e}")
+            self.login_status.config(text=f"Connection error: {e}", foreground='red')
     
     def setup_chat_screen(self):
         """Create main chat interface"""
