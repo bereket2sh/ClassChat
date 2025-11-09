@@ -322,46 +322,48 @@ class ClassChatGUI:
             timestamp = message.get('timestamp', '')
             
             if timestamp:
-                self.display_message(f"{sender} [{timestamp}]", text, 'incoming')
+                self.root.after(0, lambda: self.display_message(f"{sender} [{timestamp}]", text, 'incoming'))
             else:
-                self.display_message(sender, text, 'incoming')
+                self.root.after(0, lambda: self.display_message(sender, text, 'incoming'))
         
         elif status == 'group_message':
             # Group message
             sender = message.get('sender', 'Unknown')
             group = message.get('group', 'Unknown')
             text = message.get('text', '')
-            self.display_message(f"@{group} - {sender}", text, 'group')
+            self.root.after(0, lambda: self.display_message(f"@{group} - {sender}", text, 'group'))
         
         elif status == 'success':
             # Success notification
             text = message.get('message', 'Success')
-            self.display_message("✓ Success", text, 'system')
+            self.root.after(0, lambda: self.display_message("✓ Success", text, 'system'))
         
         elif status == 'error':
             # Error message
             text = message.get('message', 'Error')
-            self.display_message("✗ Error", text, 'error')
+            self.root.after(0, lambda: self.display_message("✗ Error", text, 'error'))
         
         elif status == 'queued':
             # Message queued for offline user
             text = message.get('message', 'Message queued')
-            self.display_message("📮 Queued", text, 'system')
+            self.root.after(0, lambda: self.display_message("📮 Queued", text, 'system'))
         
         elif status == 'offline_messages':
             # Offline messages notification
             count = message.get('count', 0)
-            self.display_message("📬 Offline Messages", f"You have {count} offline message(s)", 'system')
+            self.root.after(0, lambda: self.display_message("📬 Offline Messages", f"You have {count} offline message(s)", 'system'))
         
         elif status == 'group_list':
             # Groups list
             groups = message.get('groups', [])
-            self.update_groups_list(groups)
+            # Schedule GUI update in main thread
+            self.root.after(0, lambda: self.update_groups_list(groups))
         
         elif status == 'user_list':
             # Online users list
             users = message.get('users', [])
-            self.update_users_list(users)
+            # Schedule GUI update in main thread
+            self.root.after(0, lambda: self.update_users_list(users))
         
         elif status == 'file_transfer':
             # File received
