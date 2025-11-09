@@ -39,7 +39,7 @@ ClassChat is designed to facilitate real-time communication among students in a 
 ### 🔄 Bonus Tasks (Optional)
 - ✅ **Bonus 5.1**: Group chatting (10 points) - IMPLEMENTED
 - ✅ **Bonus 5.2**: File transfer (10 points) - IMPLEMENTED
-- ⏳ Bonus 5.3: Offline messages (10 points)
+- ✅ **Bonus 5.3**: Offline messages (10 points) - IMPLEMENTED
 - ⏳ Bonus 5.4: Encryption/Decryption (10 points)
 
 ## Project Structure
@@ -51,12 +51,14 @@ ClassChat/
 │   ├── server_multithreaded.py    # Multi-threaded server (Task 3)
 │   ├── server_task4.py            # Client-client routing server (Task 4)
 │   ├── server_bonus1.py           # Group chatting server (Bonus 5.1)
-│   ├── server_bonus2.py           # File transfer server (Bonus 5.2) ⭐
+│   ├── server_bonus2.py           # File transfer server (Bonus 5.2)
+│   ├── server_bonus3.py           # Offline messages server (Bonus 5.3) ⭐
 │   ├── client.py                  # Basic client with threading (Task 1)
 │   ├── client_advanced.py         # Advanced client with select() (Task 2)
 │   ├── client_task4.py            # JSON messaging client (Task 4)
 │   ├── client_bonus1.py           # Group chat client (Bonus 5.1)
-│   └── client_bonus2.py           # File transfer client (Bonus 5.2) ⭐
+│   ├── client_bonus2.py           # File transfer client (Bonus 5.2)
+│   └── client_bonus3.py           # Offline messages client (Bonus 5.3) ⭐
 ├── docs/
 │   └── (documentation files - local only)
 ├── screenshots/
@@ -64,7 +66,8 @@ ClassChat/
 │   ├── task2/                     # Task 2 demo screenshots and report
 │   ├── task3/                     # Task 3 demo screenshots and report
 │   ├── task4/                     # Task 4 demo screenshots and report
-│   └── bonus5.1/                  # Bonus 5.1 demo report
+│   ├── bonus5.1/                  # Bonus 5.1 demo report
+│   └── bonus5.2/                  # Bonus 5.2 demo report
 ├── README.md
 ├── Makefile
 ├── verify.sh
@@ -269,6 +272,26 @@ You: Hello, Server!
   - Submit assignments to instructor
   - Exchange project files with team members
   - Distribute class materials
+
+### Bonus 5.3: Offline Messages (10 points) ⭐
+
+#### Offline Message Features
+- ✅ **Message Queue**: Server stores messages for offline users
+- ✅ **Automatic Delivery**: Messages delivered when user reconnects
+- ✅ **Timestamps**: All offline messages include send time
+- ✅ **Message Count**: Shows number of pending messages
+- ✅ **File Support**: Queues both text messages and files
+- ✅ **Notification**: User notified about pending messages on connect
+- ✅ **Persistent Queue**: Messages remain until delivered
+- ✅ **Multiple Messages**: Handles multiple queued messages per user
+- ✅ **Thread-Safe**: Queue protected with locks for concurrent access
+- ✅ **Status Indication**: Sender knows if message was queued or delivered
+- ✅ **All Features**: Works with direct messages, groups, and files
+- ✅ **Use Cases**:
+  - Instructor assigns project to offline students
+  - Students receive announcements when they reconnect
+  - Team members leave messages for offline teammates
+  - No messages lost due to offline status
 
 ## Technical Implementation
 

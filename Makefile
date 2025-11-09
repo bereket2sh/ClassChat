@@ -1,7 +1,7 @@
 # ClassChat Makefile
 # Provides convenient commands to run server, client, and manage the project
 
-.PHONY: server server-multi server-task4 server-bonus1 server-bonus2 client client-advanced client-task4 client-bonus1 client-bonus2 clean help test
+.PHONY: server server-multi server-task4 server-bonus1 server-bonus2 server-bonus3 client client-advanced client-task4 client-bonus1 client-bonus2 client-bonus3 clean help test
 
 # Default target
 help:
@@ -18,8 +18,10 @@ help:
 	@echo "Bonus Tasks:"
 	@echo "  make server-bonus1   - Start server with group chatting (Bonus 5.1)"
 	@echo "  make client-bonus1   - Start client with group support (Bonus 5.1)"
-	@echo "  make server-bonus2   - Start server with file transfer (Bonus 5.2) ⭐"
-	@echo "  make client-bonus2   - Start client with file transfer (Bonus 5.2) ⭐"
+	@echo "  make server-bonus2   - Start server with file transfer (Bonus 5.2)"
+	@echo "  make client-bonus2   - Start client with file transfer (Bonus 5.2)"
+	@echo "  make server-bonus3   - Start server with offline messages (Bonus 5.3) ⭐"
+	@echo "  make client-bonus3   - Start client with offline messages (Bonus 5.3) ⭐"
 	@echo ""
 	@echo "Utilities:"
 	@echo "  make test            - Run basic tests"
@@ -67,6 +69,11 @@ server-bonus2:
 	@echo "Starting ClassChat Bonus 5.2 Server (File Transfer)..."
 	python3 src/server_bonus2.py
 
+# Run the Bonus 5.3 server with offline messages
+server-bonus3:
+	@echo "Starting ClassChat Bonus 5.3 Server (Offline Messages)..."
+	python3 src/server_bonus3.py
+
 # Run the client
 client:
 	@echo "Starting ClassChat Client (Task 1)..."
@@ -92,6 +99,11 @@ client-bonus2:
 	@echo "Starting ClassChat Bonus 5.2 Client (File Transfer)..."
 	python3 src/client_bonus2.py
 
+# Run the Bonus 5.3 client with offline messages
+client-bonus3:
+	@echo "Starting ClassChat Bonus 5.3 Client (Offline Messages)..."
+	python3 src/client_bonus3.py
+
 # Clean Python cache files
 clean:
 	@echo "Cleaning up Python cache files..."
@@ -108,11 +120,13 @@ test:
 	python3 -m py_compile src/server_task4.py
 	python3 -m py_compile src/server_bonus1.py
 	python3 -m py_compile src/server_bonus2.py
+	python3 -m py_compile src/server_bonus3.py
 	python3 -m py_compile src/client.py
 	python3 -m py_compile src/client_advanced.py
 	python3 -m py_compile src/client_task4.py
 	python3 -m py_compile src/client_bonus1.py
 	python3 -m py_compile src/client_bonus2.py
+	python3 -m py_compile src/client_bonus3.py
 	@echo "All syntax checks passed!"
 	python3 -m py_compile src/client_advanced.py
 	python3 -m py_compile src/client_task4.py
