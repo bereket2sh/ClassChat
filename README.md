@@ -58,7 +58,8 @@ ClassChat/
 │   ├── client_task4.py            # JSON messaging client (Task 4)
 │   ├── client_bonus1.py           # Group chat client (Bonus 5.1)
 │   ├── client_bonus2.py           # File transfer client (Bonus 5.2)
-│   └── client_bonus3.py           # Offline messages client (Bonus 5.3) ⭐
+│   ├── client_bonus3.py           # Offline messages client (Bonus 5.3) ⭐
+│   └── client_gui.py              # GUI client (All features) 🎨
 ├── docs/
 │   └── (documentation files - local only)
 ├── screenshots/
@@ -67,7 +68,9 @@ ClassChat/
 │   ├── task3/                     # Task 3 demo screenshots and report
 │   ├── task4/                     # Task 4 demo screenshots and report
 │   ├── bonus5.1/                  # Bonus 5.1 demo report
-│   └── bonus5.2/                  # Bonus 5.2 demo report
+│   ├── bonus5.2/                  # Bonus 5.2 demo report
+│   └── bonus5.3/                  # Bonus 5.3 demo report
+├── downloads/                     # Client file downloads directory
 ├── README.md
 ├── Makefile
 ├── verify.sh
@@ -77,7 +80,10 @@ ClassChat/
 ## Requirements
 
 - Python 3.6 or higher
-- No external dependencies (uses built-in `socket` module)
+- No external dependencies for CLI clients (uses built-in modules)
+- **For GUI Client**: Tkinter (usually pre-installed with Python)
+  - On Linux (if needed): `sudo apt-get install python3-tk`
+  - On macOS/Windows: Already included with Python
 
 ## Installation
 
@@ -292,6 +298,106 @@ You: Hello, Server!
   - Students receive announcements when they reconnect
   - Team members leave messages for offline teammates
   - No messages lost due to offline status
+
+## GUI Client 🎨
+
+### Graphical User Interface (client_gui.py)
+
+ClassChat now includes a **full-featured GUI client** built with Tkinter that supports all features in an intuitive graphical interface.
+
+#### GUI Features
+- ✅ **Login Screen**: Simple username entry and connection
+- ✅ **User List Panel**: Shows all online users in real-time
+- ✅ **Group List Panel**: Displays available groups
+- ✅ **Chat Display**: Scrollable message history with color-coded messages
+- ✅ **Message Input**: Easy-to-use text entry with recipient dropdown
+- ✅ **File Transfer**: File picker dialog for easy file sending
+- ✅ **Group Management**: Create, join, and leave groups via dialogs
+- ✅ **Menu Bar**: Organized menus for all operations
+- ✅ **Status Bar**: Connection status and user count
+- ✅ **Visual Indicators**: Emojis and colors for different message types
+- ✅ **Cross-Platform**: Works on Windows, macOS, and Linux
+- ✅ **No Installation**: Uses built-in Tkinter (no pip install needed)
+
+#### Running the GUI Client
+```bash
+make client-gui
+# Or directly:
+python3 src/client_gui.py
+```
+
+#### GUI Layout
+```
+┌─────────────────────────────────────────────────────────────┐
+│ ClassChat - Connected as: Username                      [X] │
+│ File | Groups | Help                                        │
+├─────────────────┬───────────────────────────────────────────┤
+│ 👤 Online Users │ 💬 Messages                               │
+│                 │                                           │
+│ Instructor      │ [10:30:15] Instructor:                   │
+│ Student1        │   Hello everyone!                         │
+│ Student2        │                                           │
+│                 │ [10:30:20] You → Student1:               │
+│ 👥 Groups       │   Hi there!                               │
+│                 │                                           │
+│ CS101           │ [10:30:25] @CS101 - Instructor:          │
+│ StudyGroup      │   Class starts in 5 minutes              │
+│                 │                                           │
+│ [🔄 Refresh]    │ [10:30:30] 📁 File Received:             │
+│                 │   From Student2: notes.pdf (245 KB)     │
+│                 │   Saved to: downloads/notes.pdf          │
+├─────────────────┴───────────────────────────────────────────┤
+│ To: [Student1 ▼]                      [📁 Send File]       │
+│ Message: [________________________]   [Send]                │
+├─────────────────────────────────────────────────────────────┤
+│ Connected as Username | 3 user(s) online                   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### GUI Message Types
+- **Green Bold**: Incoming messages from other users
+- **Purple Bold**: Your outgoing messages
+- **Orange Bold**: Group messages
+- **Blue Italic**: System notifications
+- **Gray Italic**: Timestamps and offline messages
+- **Dark Blue**: File transfer notifications
+- **Red**: Error messages
+
+#### GUI Controls
+- **Double-click user**: Auto-fill recipient field
+- **Double-click group**: Auto-fill with @groupname
+- **Enter key**: Send message
+- **Menu → File → Send File**: Open file picker
+- **Menu → Groups**: Create/join/leave groups
+- **🔄 Refresh button**: Update user and group lists
+
+#### GUI vs CLI Clients
+| Feature | GUI Client | CLI Client |
+|---------|------------|------------|
+| Message Display | Scrollable, color-coded | Terminal text |
+| User List | Real-time sidebar | Manual refresh |
+| Group List | Visual list with clicks | Type commands |
+| File Transfer | File picker dialog | Type file path |
+| Recipient Selection | Dropdown menu | Type username |
+| Ease of Use | Point and click | Type commands |
+| Learning Curve | Immediate | Requires documentation |
+| Resource Usage | Slightly higher | Minimal |
+| Accessibility | Mouse-friendly | Keyboard-only |
+
+#### When to Use GUI vs CLI
+- **Use GUI Client** for:
+  - New users unfamiliar with chat commands
+  - Quick file transfers (file picker)
+  - Visual message history
+  - Multi-tasking (window can stay open)
+  - Classroom demonstrations
+
+- **Use CLI Client** for:
+  - Server administration
+  - Automated scripts
+  - Remote SSH connections
+  - Low-resource environments
+  - Terminal-only environments
 
 ## Technical Implementation
 

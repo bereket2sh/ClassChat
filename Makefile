@@ -1,7 +1,7 @@
 # ClassChat Makefile
 # Provides convenient commands to run server, client, and manage the project
 
-.PHONY: server server-multi server-task4 server-bonus1 server-bonus2 server-bonus3 client client-advanced client-task4 client-bonus1 client-bonus2 client-bonus3 clean help test
+.PHONY: server server-multi server-task4 server-bonus1 server-bonus2 server-bonus3 client client-advanced client-task4 client-bonus1 client-bonus2 client-bonus3 client-gui clean help test
 
 # Default target
 help:
@@ -22,6 +22,9 @@ help:
 	@echo "  make client-bonus2   - Start client with file transfer (Bonus 5.2)"
 	@echo "  make server-bonus3   - Start server with offline messages (Bonus 5.3) ⭐"
 	@echo "  make client-bonus3   - Start client with offline messages (Bonus 5.3) ⭐"
+	@echo ""
+	@echo "GUI Client:"
+	@echo "  make client-gui      - Start the graphical user interface client 🎨"
 	@echo ""
 	@echo "Utilities:"
 	@echo "  make test            - Run basic tests"
@@ -104,6 +107,12 @@ client-bonus3:
 	@echo "Starting ClassChat Bonus 5.3 Client (Offline Messages)..."
 	python3 src/client_bonus3.py
 
+# Run the GUI client
+client-gui:
+	@echo "Starting ClassChat GUI Client 🎨..."
+	@echo "This requires tkinter (usually pre-installed with Python)"
+	python3 src/client_gui.py
+
 # Clean Python cache files
 clean:
 	@echo "Cleaning up Python cache files..."
@@ -127,8 +136,7 @@ test:
 	python3 -m py_compile src/client_bonus1.py
 	python3 -m py_compile src/client_bonus2.py
 	python3 -m py_compile src/client_bonus3.py
+	python3 -m py_compile src/client_gui.py
 	@echo "All syntax checks passed!"
-	python3 -m py_compile src/client_advanced.py
-	python3 -m py_compile src/client_task4.py
 	python3 -m py_compile src/client_bonus1.py
 	@echo "All syntax checks passed!"
