@@ -1,7 +1,7 @@
 # ClassChat Makefile
 # Provides convenient commands to run server, client, and manage the project
 
-.PHONY: server server-multi server-task4 server-bonus1 client client-advanced client-task4 client-bonus1 clean help test
+.PHONY: server server-multi server-task4 server-bonus1 server-bonus2 client client-advanced client-task4 client-bonus1 client-bonus2 clean help test
 
 # Default target
 help:
@@ -16,8 +16,10 @@ help:
 	@echo "  make client-task4    - Start the client-client messaging client (Task 4)"
 	@echo ""
 	@echo "Bonus Tasks:"
-	@echo "  make server-bonus1   - Start server with group chatting (Bonus 5.1) ⭐"
-	@echo "  make client-bonus1   - Start client with group support (Bonus 5.1) ⭐"
+	@echo "  make server-bonus1   - Start server with group chatting (Bonus 5.1)"
+	@echo "  make client-bonus1   - Start client with group support (Bonus 5.1)"
+	@echo "  make server-bonus2   - Start server with file transfer (Bonus 5.2) ⭐"
+	@echo "  make client-bonus2   - Start client with file transfer (Bonus 5.2) ⭐"
 	@echo ""
 	@echo "Utilities:"
 	@echo "  make test            - Run basic tests"
@@ -32,6 +34,13 @@ help:
 	@echo "  5. Instructor: /create class2024"
 	@echo "  6. Students: /join class2024"
 	@echo "  7. Instructor sends to @class2024 - all students receive!"
+	@echo ""
+	@echo "Usage (Bonus 5.2 - File Transfer):"
+	@echo "  1. Terminal 1: make server-bonus2"
+	@echo "  2. Terminal 2: make client-bonus2  (Alice)"
+	@echo "  3. Terminal 3: make client-bonus2  (Bob)"
+	@echo "  4. Alice: To: /sendfile → Recipient: Bob → File: document.pdf"
+	@echo "  5. Bob receives file in downloads/ folder with checksum verification!"
 
 # Run the server
 server:
@@ -53,6 +62,11 @@ server-bonus1:
 	@echo "Starting ClassChat Bonus 5.1 Server (Group Chatting)..."
 	python3 src/server_bonus1.py
 
+# Run the Bonus 5.2 server with file transfer
+server-bonus2:
+	@echo "Starting ClassChat Bonus 5.2 Server (File Transfer)..."
+	python3 src/server_bonus2.py
+
 # Run the client
 client:
 	@echo "Starting ClassChat Client (Task 1)..."
@@ -73,6 +87,11 @@ client-bonus1:
 	@echo "Starting ClassChat Bonus 5.1 Client (Group Chatting)..."
 	python3 src/client_bonus1.py
 
+# Run the Bonus 5.2 client with file transfer
+client-bonus2:
+	@echo "Starting ClassChat Bonus 5.2 Client (File Transfer)..."
+	python3 src/client_bonus2.py
+
 # Clean Python cache files
 clean:
 	@echo "Cleaning up Python cache files..."
@@ -88,7 +107,13 @@ test:
 	python3 -m py_compile src/server_multithreaded.py
 	python3 -m py_compile src/server_task4.py
 	python3 -m py_compile src/server_bonus1.py
+	python3 -m py_compile src/server_bonus2.py
 	python3 -m py_compile src/client.py
+	python3 -m py_compile src/client_advanced.py
+	python3 -m py_compile src/client_task4.py
+	python3 -m py_compile src/client_bonus1.py
+	python3 -m py_compile src/client_bonus2.py
+	@echo "All syntax checks passed!"
 	python3 -m py_compile src/client_advanced.py
 	python3 -m py_compile src/client_task4.py
 	python3 -m py_compile src/client_bonus1.py

@@ -38,7 +38,7 @@ ClassChat is designed to facilitate real-time communication among students in a 
 
 ### 🔄 Bonus Tasks (Optional)
 - ✅ **Bonus 5.1**: Group chatting (10 points) - IMPLEMENTED
-- ⏳ Bonus 5.2: File transfer (10 points)
+- ✅ **Bonus 5.2**: File transfer (10 points) - IMPLEMENTED
 - ⏳ Bonus 5.3: Offline messages (10 points)
 - ⏳ Bonus 5.4: Encryption/Decryption (10 points)
 
@@ -50,18 +50,21 @@ ClassChat/
 │   ├── server.py                  # Basic server (Task 1)
 │   ├── server_multithreaded.py    # Multi-threaded server (Task 3)
 │   ├── server_task4.py            # Client-client routing server (Task 4)
-│   ├── server_bonus1.py           # Group chatting server (Bonus 5.1) ⭐
+│   ├── server_bonus1.py           # Group chatting server (Bonus 5.1)
+│   ├── server_bonus2.py           # File transfer server (Bonus 5.2) ⭐
 │   ├── client.py                  # Basic client with threading (Task 1)
 │   ├── client_advanced.py         # Advanced client with select() (Task 2)
 │   ├── client_task4.py            # JSON messaging client (Task 4)
-│   └── client_bonus1.py           # Group chat client (Bonus 5.1) ⭐
+│   ├── client_bonus1.py           # Group chat client (Bonus 5.1)
+│   └── client_bonus2.py           # File transfer client (Bonus 5.2) ⭐
 ├── docs/
 │   └── (documentation files - local only)
 ├── screenshots/
 │   ├── task1/                     # Task 1 demo screenshots and report
 │   ├── task2/                     # Task 2 demo screenshots and report
 │   ├── task3/                     # Task 3 demo screenshots and report
-│   └── task4/                     # Task 4 demo screenshots and report
+│   ├── task4/                     # Task 4 demo screenshots and report
+│   └── bonus5.1/                  # Bonus 5.1 demo report
 ├── README.md
 ├── Makefile
 ├── verify.sh
@@ -246,6 +249,26 @@ You: Hello, Server!
   - Students ask questions visible to all
   - Group discussions for team projects
   - Department-wide notifications
+
+### Bonus 5.2: File Transfer (10 points) ⭐
+
+#### File Transfer Features
+- ✅ **Binary File Support**: Transfer any file type (documents, images, videos, etc.)
+- ✅ **File Metadata**: Includes filename, filesize, and SHA256 checksum
+- ✅ **Integrity Verification**: Automatic checksum validation on receipt
+- ✅ **Base64 Encoding**: Binary data encoded for JSON transport
+- ✅ **Download Management**: Files saved to downloads/ directory automatically
+- ✅ **Duplicate Handling**: Auto-rename if file already exists
+- ✅ **Size Limit**: 10MB maximum file size for safety
+- ✅ **Progress Indication**: Upload and download status messages
+- ✅ **Error Handling**: Validates file exists, checks recipient is online
+- ✅ **File Command**: `/sendfile` for easy file transfers
+- ✅ **All Features**: Maintains direct messaging, group chat alongside file transfer
+- ✅ **Use Cases**:
+  - Share lecture notes with students
+  - Submit assignments to instructor
+  - Exchange project files with team members
+  - Distribute class materials
 
 ## Technical Implementation
 
