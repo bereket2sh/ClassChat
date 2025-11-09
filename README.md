@@ -37,10 +37,10 @@ ClassChat is designed to facilitate real-time communication among students in a 
 - **Delivery Confirmation**: Sender receives confirmation when message delivered
 
 ### 🔄 Bonus Tasks (Optional)
-- Group chatting (10 points)
-- File transfer (10 points)
-- Offline messages (10 points)
-- Encryption/Decryption (10 points)
+- ✅ **Bonus 5.1**: Group chatting (10 points) - IMPLEMENTED
+- ⏳ Bonus 5.2: File transfer (10 points)
+- ⏳ Bonus 5.3: Offline messages (10 points)
+- ⏳ Bonus 5.4: Encryption/Decryption (10 points)
 
 ## Project Structure
 
@@ -49,16 +49,19 @@ ClassChat/
 ├── src/
 │   ├── server.py                  # Basic server (Task 1)
 │   ├── server_multithreaded.py    # Multi-threaded server (Task 3)
-│   ├── server_task4.py            # Client-client routing server (Task 4) ⭐
+│   ├── server_task4.py            # Client-client routing server (Task 4)
+│   ├── server_bonus1.py           # Group chatting server (Bonus 5.1) ⭐
 │   ├── client.py                  # Basic client with threading (Task 1)
 │   ├── client_advanced.py         # Advanced client with select() (Task 2)
-│   └── client_task4.py            # JSON messaging client (Task 4) ⭐
+│   ├── client_task4.py            # JSON messaging client (Task 4)
+│   └── client_bonus1.py           # Group chat client (Bonus 5.1) ⭐
 ├── docs/
 │   └── (documentation files - local only)
 ├── screenshots/
 │   ├── task1/                     # Task 1 demo screenshots and report
 │   ├── task2/                     # Task 2 demo screenshots and report
-│   └── task3/                     # Task 3 demo screenshots and report
+│   ├── task3/                     # Task 3 demo screenshots and report
+│   └── task4/                     # Task 4 demo screenshots and report
 ├── README.md
 ├── Makefile
 ├── verify.sh
@@ -222,6 +225,28 @@ You: Hello, Server!
 - ✅ **Username Uniqueness**: Prevents duplicate usernames
 - ✅ **Automatic Cleanup**: Removes disconnected users from registry
 
+### Bonus 5.1: Group Chatting (10 points) ⭐
+
+#### Group Chat Features
+- ✅ **Group Management**: Create, join, and leave groups dynamically
+- ✅ **Group Registry**: Server maintains {group_name: set(members)} mapping
+- ✅ **Broadcasting**: Messages sent to @groupname reach all group members
+- ✅ **Direct Messaging**: Still supports 1-to-1 messages alongside groups
+- ✅ **Group Commands**:
+  - `/create groupname` - Create a new group (creator auto-joins)
+  - `/join groupname` - Join an existing group
+  - `/leave groupname` - Leave a group
+  - `/groups` - List all active groups and their members
+- ✅ **Message Format**: Group messages use @groupname as receiver
+- ✅ **Member Visibility**: All group members can see who's in each group
+- ✅ **Auto-cleanup**: Empty groups deleted automatically
+- ✅ **Broadcast Confirmation**: Sender knows how many members received message
+- ✅ **Use Cases**: 
+  - Instructor announces to entire class
+  - Students ask questions visible to all
+  - Group discussions for team projects
+  - Department-wide notifications
+
 ## Technical Implementation
 
 ### Server Architecture (Basic - Task 1)
@@ -284,12 +309,46 @@ You: Hello, Server!
 5. Disconnect one client, verify others still connected
 6. Test exit command
 
+#### Test Bonus 5.1 (Group Chatting): ⭐
+1. Start group server: `make server-bonus1`
+2. Open 4 terminals for clients:
+   - Terminal 2: `make client-bonus1` → Username: Instructor
+   - Terminal 3: `make client-bonus1` → Username: Student1
+   - Terminal 4: `make client-bonus1` → Username: Student2
+   - Terminal 5: `make client-bonus1` → Username: Student3
+3. Instructor creates group:
+   - To: `/create class2024`
+4. Students join group:
+   - To: `/join class2024`
+5. Check group membership:
+   - To: `/groups`
+6. Instructor broadcasts to group:
+   - To: `@class2024`
+   - Message: `Assignment 3 is due next Friday!`
+7. All students receive the broadcast
+8. Student1 asks question to group:
+   - To: `@class2024`
+   - Message: `Can we use Python for the assignment?`
+9. Verify all group members (Instructor + Students) see the question
+10. Test direct message alongside groups:
+    - Instructor to Student1: To: `Student1`, Message: `Yes, Python is allowed`
+11. Test leave group: To: `/leave class2024`
+
 ### Makefile Commands
 ```bash
+# Core Tasks
 make server          # Run the basic server (Task 1)
-make server-multi    # Run the multi-threaded server (Task 3) ⭐
+make server-multi    # Run the multi-threaded server (Task 3)
+make server-task4    # Run the client-client routing server (Task 4)
 make client          # Run the basic client (Task 1)
 make client-advanced # Run the advanced client with select() (Task 2)
+make client-task4    # Run the JSON messaging client (Task 4)
+
+# Bonus Tasks
+make server-bonus1   # Run the group chatting server (Bonus 5.1) ⭐
+make client-bonus1   # Run the group chat client (Bonus 5.1) ⭐
+
+# Utilities
 make test            # Run syntax checks
 make clean           # Clean up Python cache files
 make help            # Show all available commands
