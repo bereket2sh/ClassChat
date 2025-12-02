@@ -53,14 +53,3 @@ Academic use only – Class Project
 
 Bereket, CSCE 513, November 2025
 
-## Exporting to PDF (Markdown PDF Extension)
-
-To remove the automatic header/footer (filename and date) when exporting to PDF using the Markdown PDF extension by yzane, add this to your VS Code `settings.json`:
-
-```json
-"markdown-pdf.displayHeaderFooter": false
-```
-
-Or search for `markdown-pdf.displayHeaderFooter` in VS Code settings and set it to `false`.
-
-
